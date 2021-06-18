@@ -3,10 +3,14 @@ package raft
 import "log"
 
 // Debugging
-const Debug = false
+const (
+	VotingDebug    = false
+	AppendingDebug = false
+	ElectionDebug  = false
+)
 
-func DPrintf(format string, a ...interface{}) (n int, err error) {
-	if Debug {
+func DPrintf(flag bool, format string, a ...interface{}) (n int, err error) {
+	if flag {
 		log.Printf(format, a...)
 	}
 	return
