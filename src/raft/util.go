@@ -1,6 +1,10 @@
 package raft
 
-import "log"
+import (
+	"log"
+	"os"
+	"strconv"
+)
 
 // Debugging
 const (
@@ -9,9 +13,15 @@ const (
 	ElectionDebug  = false
 )
 
-func DPrintf(flag bool, format string, a ...interface{}) (n int, err error) {
-	if flag {
-		log.Printf(format, a...)
+func getVerbosity() int {
+	v := os.Getenv("VERBOSE")
+	level := 0
+	if v != "" {
+		var err error
+		level, err = strconv.Atoi(v)
+		if err != nil {
+			log.Fatalf("Invalid verbosity %v", v)
+		}
 	}
-	return
+	return level
 }
